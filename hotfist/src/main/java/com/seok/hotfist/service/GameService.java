@@ -35,7 +35,7 @@ public class GameService {
 
     private void gameStart() throws IOException {
         for (MasterScore stage : MasterScore.values()) {
-            int playerPower = random.nextInt(101);
+            int playerPower = random.nextInt(101);  // 0 ~ 100
             int masterPower = stage.getPOWER();
 
             System.out.println("\n===== 스테이지 " + (stage.ordinal() + 1) + " =====");
@@ -45,7 +45,7 @@ public class GameService {
 
             if (playerPower < masterPower) {
                 System.out.println("❌ 힘이 부족합니다! 손이 부러졌습니다...🚑");
-//                gameEnd(false);
+                gameEnd(false);
                 return;
             } else {
                 int getScore = playerPower - masterPower;
@@ -53,6 +53,31 @@ public class GameService {
                 System.out.println("🌫️ 성공! 송판이 부서졌습니다! (+ " + getScore + "점)");
             }
         }
-//        gameEnd(true);
+        gameEnd(true);
     }
+
+    private void gameEnd(boolean isCompleted) throws IOException {
+        if (isCompleted) {
+            System.out.println("🎉 모든 송판을 부쉈습니다!");
+        } else {
+            System.out.println("😭 게임 오버!");
+        }
+        System.out.println(" 최종 점수: " + totalScore);
+
+        // 점수 저장
+//        gr.saveGameScore(totalScore);
+
+        // 최고 점수 갱신 확인
+//        int highScore = gr.getHighScore();
+//        if (totalScore > highScore) {
+//            System.out.println("🏆 최고 기록 갱신!");
+//            System.out.println("💬 \"좀 치는데 ㅋ\"");
+//        } else {
+//            System.out.println("💬 \"손이나 낫고 와라 ㅋ\"");
+//        }
+        System.out.print("⭐ 아무키나 입력하세요... ⭐");
+        System.in.read();
+        System.out.println("로비로 돌아갑니다...");
+    }
+
 }
