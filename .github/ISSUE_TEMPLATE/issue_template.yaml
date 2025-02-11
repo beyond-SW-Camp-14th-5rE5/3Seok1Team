@@ -1,8 +1,8 @@
 name: "✨ Enhancement"
 description: "새로운 기능 추가"
 title : "[MEMBER/GAME/RANKING] "
-labels: ["✨ enhancement"]
-projects : ["HotFist"]
+labels: [":sparkles: enhancement"]
+projects: ["beyond-SW-Camp-14th-5rE5/5"]
 body:
   - type: textarea
     attributes:
