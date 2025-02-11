@@ -1,6 +1,8 @@
 name: "✨ Enhancement"
 description: "새로운 기능 추가"
-labels: ["enhancement"]
+title : "[MEMBER/GAME/RANKING] "
+labels: ["✨ enhancement"]
+projects : ["HotFist"]
 body:
   - type: textarea
     attributes:
