@@ -12,7 +12,7 @@ body:
   - type: textarea
     attributes:
       label: ✅ 작업할 내용
-      description: 할 일을 체크박스 형태로 작성해주세요. '- [ ]' 형식을 사용하면 체크박스로 표시됩니다. '- [x]' 인 경우 체크된 체크박스로 나옵니다.
+      description: 할 일을 체크박스 형태로 작성해주세요.
       placeholder: 최대한 세분화 해서 적어주세요!
     validations:
       required: true
