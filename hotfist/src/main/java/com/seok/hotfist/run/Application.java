@@ -1,8 +1,12 @@
 package com.seok.hotfist.run;
 
+import com.seok.hotfist.service.MemberService;
+
 import java.util.Scanner;
 
 public class Application {
+
+    private static final MemberService ms = new MemberService();
 
     public static void main(String[] args) {
 
