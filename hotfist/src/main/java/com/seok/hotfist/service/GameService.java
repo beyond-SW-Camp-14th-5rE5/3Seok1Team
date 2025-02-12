@@ -1,9 +1,12 @@
 package com.seok.hotfist.service;
 
+import com.seok.hotfist.aggregate.GameLog;
 import com.seok.hotfist.aggregate.MasterScore;
 import com.seok.hotfist.repository.GameRepository;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /* 게임 로직 처리 */
@@ -12,6 +15,7 @@ public class GameService {
     private final GameRepository gr = new GameRepository();
 
     static int totalScore = 0;
+    static int aitotlaScore = 0;
     static Random random = new Random();
 
     public GameService() {
@@ -64,20 +68,52 @@ public class GameService {
         }
         System.out.println(" 최종 점수: " + totalScore);
 
-        // 점수 저장
-//        gr.saveGameScore(totalScore);
+        // 랭킹에 등록
+        if (totalScore > 0) {
+            System.out.println("💬 \"좀 치는데 ㅋ\"");
 
-        // 최고 점수 갱신 확인
-//        int highScore = gr.getHighScore();
-//        if (totalScore > highScore) {
-//            System.out.println("🏆 최고 기록 갱신!");
-//            System.out.println("💬 \"좀 치는데 ㅋ\"");
-//        } else {
-//            System.out.println("💬 \"손이나 낫고 와라 ㅋ\"");
-//        }
+            // 등록 함수 호출
+        } else {
+            System.out.println("💬 \"손이나 낫고 와라 ㅋ\"");
+        }
+
+        // 점수 로그에 저장
+        gr.saveGameScore(totalScore);
+
         System.out.print("⭐ 아무키나 입력하세요... ⭐");
         System.in.read();
         System.out.println("로비로 돌아갑니다...");
     }
 
+    // 모든 게임 기록 확인
+    public void findAllGameLogs() {
+        ArrayList<GameLog> findLogs = gr.selectAllGameLogs();
+
+        System.out.println("테스트용 모든 게임 기록 확인");
+        for (GameLog gameLog : findLogs) {
+            System.out.println(gameLog);
+        }
+    }
+
+    // 로그인한 회원의 모든 게임 기록 확인
+    public void findMyGameLogs() {
+        ArrayList<GameLog> findMyLogs = gr.selectMyGameLogs();
+
+        for(GameLog gameLog : findMyLogs){
+            System.out.println(gameLog);
+        }
+    }
+
+    // 기록 n개만 확인
+    public void findLastMyGameLogs(int memNo, int count) {
+       List<GameLog> lastGameLogs =  gr.getLastMyGameLogs(count);
+
+       if(!lastGameLogs.isEmpty()) {
+           for(GameLog gameLog : lastGameLogs) {
+                System.out.println(gameLog.getGameNo() + ": " + gameLog.getScore() + "    " + gameLog.getDateTime());
+           }
+       } else {
+           System.out.println(memNo + " 회원님의 게임 기록은 없습니다! 빨리 게임하세요!");
+       }
+    }
 }
