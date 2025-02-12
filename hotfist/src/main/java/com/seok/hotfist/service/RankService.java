@@ -9,7 +9,7 @@ public class RankService {
     private final RankRepository rankRepository = new RankRepository();
 
     public void registerRank(int memberId, String nickname, int score) {
-        Member member = new Member(memberId, "temp_id", "temp_pass", nickname, score);
+        Member member = new Member();
         rankRepository.saveRank(member);
         System.out.println("신기록을 달성하여 " + nickname + "님의 점수 " + score + " 점이 랭킹에 등록되었습니다.");
     }
