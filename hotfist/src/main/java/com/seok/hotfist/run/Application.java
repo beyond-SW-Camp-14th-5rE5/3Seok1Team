@@ -1,7 +1,5 @@
 package com.seok.hotfist.run;
 
-import com.seok.hotfist.aggregate.Member;
-import com.seok.hotfist.repository.RankRepository;
 import com.seok.hotfist.service.MemberService;
 import com.seok.hotfist.service.RankService;
 
