@@ -15,9 +15,9 @@ public class MemberRepository {
 
         if (!file.exists()) {
             ArrayList<Member> defaultMembers = new ArrayList<>();
-            defaultMembers.add(new Member(1, "user01", "pass01", "성남초일짱혜민", 100));
-            defaultMembers.add(new Member(2, "user02", "pass02", "동작구샹크스성민", 50));
-            defaultMembers.add(new Member(3, "user03", "pass03", "디아블잠브윤석", 12));
+            defaultMembers.add(new Member(1, "user01", "pass01", "성남초일짱혜민", 300));
+            defaultMembers.add(new Member(2, "user02", "pass02", "동작구샹크스성민", 150));
+            defaultMembers.add(new Member(3, "user03", "pass03", "디아블잠브윤석", 120));
 
             saveMembers(defaultMembers);
         }

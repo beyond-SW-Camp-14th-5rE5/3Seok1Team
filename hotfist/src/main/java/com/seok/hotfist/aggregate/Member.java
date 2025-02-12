@@ -17,7 +17,7 @@ public class Member implements Serializable {
         this.id = id;
         this.pwd = pwd;
         this.nickname = nickname;
-        this.score = score;
+        this.score = score;         //
     }
 
     public int getMemberNo() {
