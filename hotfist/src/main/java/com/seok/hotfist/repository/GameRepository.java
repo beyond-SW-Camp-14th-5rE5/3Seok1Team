@@ -4,7 +4,8 @@ import com.seok.hotfist.aggregate.GameLog;
 import com.seok.hotfist.aggregate.Status;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /* 랭킹 저장 및 조회 */
 public class GameRepository {
@@ -13,16 +14,16 @@ public class GameRepository {
     private final File gameLogFile =
             new File("src/main/java/com/seok/hotfist/db/gameLogDB.dat");
 
-    java.util.Date today = new java.util.Date();
+    private final ArrayList<GameLog> myGameLogList = new ArrayList<>();
 
     public GameRepository() {
         if(!gameLogFile.exists()) {
             ArrayList<GameLog> defaultGameLogList = new ArrayList<>();
 
             // 더미데이터 추가
-            defaultGameLogList.add(new GameLog(1, 1, 10, new java.util.Date(today.getTime()), Status.ACTIVE));
-            defaultGameLogList.add(new GameLog(2, 1, 20, new java.util.Date(today.getTime()), Status.ACTIVE));
-            defaultGameLogList.add(new GameLog(3, 1, 30, new java.util.Date(today.getTime()), Status.ACTIVE));
+            defaultGameLogList.add(new GameLog(1, 1, 10, LocalDateTime.now(), Status.ACTIVE));
+            defaultGameLogList.add(new GameLog(2, 1, 20, LocalDateTime.now(), Status.ACTIVE));
+            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.now(), Status.ACTIVE));
 
             saveGameLog(defaultGameLogList);
         }
@@ -77,14 +78,47 @@ public class GameRepository {
         }
     }
 
-    public void saveGameScore(int totalScore) {
+    // 로그인한 회원의 모든 게임 기록
+    public ArrayList<GameLog> selectMyGameLogs() {
+        return myGameLogList;
     }
 
-    public int getHighScore() {
-        return 0;
+    // 로그인하면 회원의 게임 기록 저장 (로그인 시 호출)
+    public List<GameLog> FindMyGameLogs(int memNo) {
+        List<GameLog> returnGameLog = new ArrayList<>();
+
+        for(GameLog gameLog : gameLogList) {
+            if(gameLog.getMemNo() == memNo) {
+                returnGameLog.add(gameLog);
+            }
+        }
+        return returnGameLog;
+    }
+
+    public void saveGameScore(int totalScore) {
     }
 
     public ArrayList<GameLog> selectAllGameLogs() {
         return gameLogList;
+    }
+
+    public List<GameLog> getLastMyGameLogs(int count) {
+        List<GameLog> resultList = new ArrayList<>();
+        Queue<GameLog> gameLogQueue =
+                new PriorityQueue<>(Comparator.comparing(GameLog::getDateTime).reversed());
+
+        // myGameLogList의 개수만큼 || count 이하까지 queue에 저장
+        int i = 0;
+        for(GameLog log : myGameLogList) {
+            if(i >= count) break;
+            gameLogQueue.add(log);
+        }
+
+        // 정렬된 데이터 리스트에 저장
+        while(!gameLogQueue.isEmpty()) {
+            resultList.add(gameLogQueue.poll());
+        }
+
+        return resultList;
     }
 }

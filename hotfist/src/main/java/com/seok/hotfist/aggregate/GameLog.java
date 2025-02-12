@@ -1,13 +1,12 @@
 package com.seok.hotfist.aggregate;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class GameLog implements Serializable {
     private int gameNo;
     private int memNo;
     private int score;
-    private java.util.Date date;
+    private java.time.LocalDateTime dateTime;
     private Status gameLogStatus;           // 활성화여부
 
     public GameLog() {
@@ -18,11 +17,11 @@ public class GameLog implements Serializable {
         this.memNo = memNo;
         this.score = score;
     }
-    public GameLog(int gameNo, int memNo, int score, Date date, Status gameLogStatus) {
+    public GameLog(int gameNo, int memNo, int score, java.time.LocalDateTime dateTime, Status gameLogStatus) {
         this.gameNo = gameNo;
         this.memNo = memNo;
         this.score = score;
-        this.date = date;
+        this.dateTime = dateTime;
         this.gameLogStatus = gameLogStatus;
     }
 
@@ -50,12 +49,12 @@ public class GameLog implements Serializable {
         this.score = score;
     }
 
-    public Date getDate() {
-        return date;
+    public java.time.LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateTime(java.time.LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public Status getGameLogStatus() {
@@ -72,7 +71,7 @@ public class GameLog implements Serializable {
                 "gameNo=" + gameNo +
                 ", memNo=" + memNo +
                 ", score=" + score +
-                ", date=" + date +
+                ", dateTime=" + dateTime +
                 ", gameLogStatus=" + gameLogStatus +
                 '}';
     }
