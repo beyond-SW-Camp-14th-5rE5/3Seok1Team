@@ -1,9 +1,11 @@
 package com.seok.hotfist.service;
 
+import com.seok.hotfist.aggregate.GameLog;
 import com.seok.hotfist.aggregate.MasterScore;
 import com.seok.hotfist.repository.GameRepository;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 /* 게임 로직 처리 */
@@ -12,6 +14,7 @@ public class GameService {
     private final GameRepository gr = new GameRepository();
 
     static int totalScore = 0;
+    static int aitotlaScore = 0;
     static Random random = new Random();
 
     public GameService() {
@@ -65,19 +68,33 @@ public class GameService {
         System.out.println(" 최종 점수: " + totalScore);
 
         // 점수 저장
-//        gr.saveGameScore(totalScore);
+        gr.saveGameScore(totalScore);
 
         // 최고 점수 갱신 확인
-//        int highScore = gr.getHighScore();
-//        if (totalScore > highScore) {
-//            System.out.println("🏆 최고 기록 갱신!");
-//            System.out.println("💬 \"좀 치는데 ㅋ\"");
-//        } else {
-//            System.out.println("💬 \"손이나 낫고 와라 ㅋ\"");
-//        }
+        int highScore = gr.getHighScore();
+        if (totalScore > highScore) {
+            System.out.println("🏆 최고 기록 갱신!");
+            System.out.println("💬 \"좀 치는데 ㅋ\"");
+
+            // 랭킹 등록
+
+
+        } else {
+            System.out.println("💬 \"손이나 낫고 와라 ㅋ\"");
+        }
+
         System.out.print("⭐ 아무키나 입력하세요... ⭐");
         System.in.read();
         System.out.println("로비로 돌아갑니다...");
     }
 
+    // 모든 게임 기록 확인
+    public void findAllGameLogs() {
+        ArrayList<GameLog> findLogs = gr.selectAllGameLogs();
+
+        System.out.println("테스트용 모든 게임 기록 확인");
+        for (GameLog gameLog : findLogs) {
+            System.out.println(gameLog);
+        }
+    }
 }
