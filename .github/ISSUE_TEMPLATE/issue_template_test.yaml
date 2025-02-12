@@ -1,0 +1,22 @@
+name: "🧪 Test"
+description: "테스트 관련 이슈"
+title : "[MEMBER/GAME/RANKING] "
+labels: [":test_tube: test"]
+projects: ["beyond-SW-Camp-14th-5rE5/5"]
+body:
+  - type: textarea
+    attributes:
+      label: 📄 설명
+      description: 어떤 기능에 대한 테스트인지 설명을 작성해 주세요.
+      placeholder: 최대한 자세하게 작성해주세요!
+      value:
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: ✅ 테스트할 내용
+      description: 테스트 내용을 체크박스 형태로 작성해주세요.
+      placeholder: 최대한 세분화 해서 적어주세요!
+      value:
+    validations:
+      required: true
