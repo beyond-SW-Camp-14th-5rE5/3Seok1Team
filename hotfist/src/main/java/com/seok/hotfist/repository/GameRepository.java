@@ -2,6 +2,7 @@ package com.seok.hotfist.repository;
 
 import com.seok.hotfist.aggregate.GameLog;
 import com.seok.hotfist.aggregate.Status;
+import com.seok.hotfist.stream.MyObjectOutput;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -83,6 +84,12 @@ public class GameRepository {
         return gameLogList;
     }
 
+    // 마지막 게임 번호
+    public int selectLastGameNo() {
+        GameLog lastGame = gameLogList.get(gameLogList.size() - 1);
+        return lastGame.getGameNo();
+    }
+
     // 로그인한 회원의 전적 List<GameLog>로 반환
     public List<GameLog> getLastMyGameLogs(int memNo, int count) {
         List<GameLog> myGameLogList = FindMyGameLogs(memNo);
@@ -119,8 +126,32 @@ public class GameRepository {
         return returnGameLog;
     }
 
-    public void saveGameScore(int totalScore) {
+    public int saveGameScore(GameLog gameLog) {
+        int result = 0;
+        MyObjectOutput moo = null;
 
+        try {
+            moo = new MyObjectOutput(
+                    new BufferedOutputStream(
+                            new FileOutputStream(gameLogFile, true)
+                    )
+            );
+
+            moo.writeObject(gameLog);
+            gameLogList.add(gameLog);
+
+            result = 1;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(moo != null) moo.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return result;
     }
 
 }
