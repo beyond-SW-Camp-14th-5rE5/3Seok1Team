@@ -132,6 +132,14 @@ public class MemberRepository {
 
         return result;
     }
+
+    public ArrayList<Member> getMemberList() {
+        return memberList;
+    }
+
+    public ArrayList<Member> selectAllMembers() {
+        return memberList;
+    }
 }
 
 

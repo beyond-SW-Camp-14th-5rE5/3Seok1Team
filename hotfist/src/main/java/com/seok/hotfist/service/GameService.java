@@ -107,7 +107,26 @@ public class GameService {
                 System.out.println(gameLog.getGameNo() + ": " + gameLog.getScore() + "    " + gameLog.getDateTime());
             }
         } else {
-            System.out.println(memNo + " 회원님의 게임 기록은 없습니다! 빨리 게임하세요!");
+            System.out.println("  " + memNo + " 회원님의 게임 기록은 없습니다! 빨리 게임하세요!");
         }
+    }
+
+    // 추가된 부분
+    public int getHighScore(int memNo) {
+        List<GameLog> allMyLogs = gr.FindMyGameLogs(memNo);
+
+        if (allMyLogs.isEmpty()) {
+            return 0;
+        }
+
+        int highScore = 0;
+
+        for (GameLog log : allMyLogs) {
+            if (log.getScore() > highScore) {
+                highScore = log.getScore();
+            }
+        }
+
+        return highScore;
     }
 }

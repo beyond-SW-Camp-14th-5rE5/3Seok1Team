@@ -1,27 +1,23 @@
 package com.seok.hotfist.service;
 
-
 import com.seok.hotfist.aggregate.Member;
 import com.seok.hotfist.aggregate.Status;
 import com.seok.hotfist.repository.MemberRepository;
 
-// 비지니스 로직 처리 공간
-public class MemberService {
+import java.util.ArrayList;
 
-    private final MemberRepository mr = new MemberRepository();
+public class MemberService {
+    private static final MemberRepository mr = new MemberRepository(); // static으로 변경
+    private static String loggedInUserId = null;
+    private static int loggedInUserNo = -1;
 
     public void registMember(Member member) {
-
-        //회원가입 시 입력받은 값 제외 번호,상태 입력
         int lastMemberNo = mr.selectLastMemberNo();
         member.setMemNo(lastMemberNo + 1);
-
         member.setMemStatus(Status.ACTIVE);
 
-        // 모든 DML작업이 일어난 행의 갯수
         int result = mr.insertMember(member);
         System.out.println("insert 성공실패 여부 : " + result);
-
     }
 
     public void removeMember(int removeMemNo) {
@@ -32,8 +28,52 @@ public class MemberService {
             System.out.println("회원 탈퇴를 실패했습니다.");
         }
     }
-    // MemberService 클래스 안에 있는 MemberRepository는 서로 연결되어있다.
-    // DB에 연결된 MemberRepository를 데려온 느낌
 
+    public String loginMember(String id, String pwd) {
+        for (Member member : mr.getMemberList()) {
+            if (member.getMemId().equals(id) &&
+                    member.getMemPwd().equals(pwd) &&
+                    member.getMemStatus() == Status.ACTIVE) {
+                loggedInUserId = id;
+                loggedInUserNo = member.getMemNo();
+                return id;
+            }
+        }
+        return null;
     }
 
+    public static String getLoggedInUserId() {
+        return loggedInUserId;
+    }
+
+    public static int getLoggedInUserNo() {
+        return loggedInUserNo;
+    }
+
+    public static String getLoggedInUserNick() {
+        for (Member member : mr.getMemberList()) {
+            if (member.getMemNo() == loggedInUserNo) {
+                return member.getMemNick();
+            }
+        }
+        return null;
+    }
+
+    public Member getLoggedInMember() {
+        for (Member member : mr.getMemberList()) {
+            if (member.getMemNo() == loggedInUserNo) {
+                return member;
+            }
+        }
+        return null;
+    }
+
+    public void findAllMembers() {
+        ArrayList<Member> findMembers = mr.selectAllMembers();
+
+        System.out.println("Service에서 조회 확인: ");
+        for (Member member : findMembers) {
+            System.out.println(member);
+        }
+    }
+}
