@@ -19,12 +19,12 @@ public class GameRepository {
             ArrayList<GameLog> defaultGameLogList = new ArrayList<>();
 
             // 더미데이터 추가
-            defaultGameLogList.add(new GameLog(1, 1, 10, LocalDateTime.now(), Status.ACTIVE));
-            defaultGameLogList.add(new GameLog(2, 1, 20, LocalDateTime.of(2025, 2, 5, 14, 33 ,20), Status.ACTIVE));
-            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.of(2025, 3, 5, 14, 33 ,20), Status.ACTIVE));
-            defaultGameLogList.add(new GameLog(2, 1, 30, LocalDateTime.of(2024, 3, 5, 14, 33 ,20), Status.ACTIVE));
-            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.of(2023, 3, 5, 14, 33 ,20), Status.ACTIVE));
-            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.of(2021, 3, 5, 14, 33 ,20), Status.ACTIVE));
+            defaultGameLogList.add(new GameLog(1, 1, 10, LocalDateTime.now()));
+            defaultGameLogList.add(new GameLog(2, 1, 20, LocalDateTime.of(2025, 2, 5, 14, 33 ,20)));
+            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.of(2025, 3, 5, 14, 33 ,20)));
+            defaultGameLogList.add(new GameLog(2, 1, 30, LocalDateTime.of(2024, 3, 5, 14, 33 ,20)));
+            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.of(2023, 3, 5, 14, 33 ,20)));
+            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.of(2021, 3, 5, 14, 33 ,20)));
 
             saveGameLog(defaultGameLogList);
         }
@@ -120,6 +120,7 @@ public class GameRepository {
     }
 
     public void saveGameScore(int totalScore) {
+
     }
 
 }

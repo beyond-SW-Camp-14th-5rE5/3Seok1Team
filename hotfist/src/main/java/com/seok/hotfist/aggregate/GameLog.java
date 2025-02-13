@@ -17,7 +17,7 @@ public class GameLog implements Serializable {
         this.memNo = memNo;
         this.score = score;
     }
-    public GameLog(int gameNo, int memNo, int score, java.time.LocalDateTime dateTime, Status gameLogStatus) {
+    public GameLog(int gameNo, int memNo, int score, java.time.LocalDateTime dateTime) {
         this.gameNo = gameNo;
         this.memNo = memNo;
         this.score = score;
