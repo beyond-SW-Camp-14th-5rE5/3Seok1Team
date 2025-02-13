@@ -117,6 +117,21 @@ public class MemberRepository {
 
         return result;
     }
+
+    // soft delete(일종의 업데이트)를 통해 회원 탈퇴를 구성
+    public int deleteMember(int removeMemNo) {
+        int result = 0;
+
+        for (Member member : memberList) {
+            if (member.getMemNo() == removeMemNo) {
+                member.setMemStatus(Status.DEACTIVATED);
+                result = 1;
+                saveMembers(memberList);
+            }
+        }
+
+        return result;
+    }
 }
 
 

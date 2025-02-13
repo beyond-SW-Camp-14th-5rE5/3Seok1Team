@@ -25,7 +25,7 @@ public class Application3 {
                     break;
                 case 2:     //회원 로그인
                     break;
-                case 3:     //회원 탈퇴
+                case 3:  ms.removeMember(chooseMemNo());  //회원 탈퇴
                     break;
                 case 9:
                     System.out.println("회원 서비스를 종료합니다.");
@@ -35,6 +35,12 @@ public class Application3 {
                     System.out.println("번호를 다시 입력해주세요");
             }
         }
+    }
+
+    private static int chooseMemNo() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("회원 번호를 입력하세요: ");
+        return sc.nextInt();
     }
 
     private static Member signUp() {
