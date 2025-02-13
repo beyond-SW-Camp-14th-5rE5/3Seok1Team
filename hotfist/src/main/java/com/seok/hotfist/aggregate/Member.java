@@ -1,73 +1,80 @@
 package com.seok.hotfist.aggregate;
 
+
 import java.io.Serializable;
 
 public class Member implements Serializable {
-    private int memberNo;
-    private String id;
-    private String pwd;
-    private String nickname;
-    private int score;
+    private int memNo;       //회원 번호
+    private String memId;      //회원 아이디
+    private String memPwd;        //회원 비밀번호
+    private String memNick;       //회원 닉네임
+    private Status memStatus;   //회원 탈퇴여부
 
     public Member() {
     }
 
-    public Member(int memberNo, String id, String pwd, String nickname, int score) {
-        this.memberNo = memberNo;
-        this.id = id;
-        this.pwd = pwd;
-        this.nickname = nickname;
-        this.score = score;         //
+    public Member(int memNo, String memId, String memPwd, String memNick, Status memStatus) {
+        this.memNo = memNo;
+        this.memId = memId;
+        this.memPwd = memPwd;
+        this.memNick = memNick;
+        this.memStatus = memStatus;
     }
 
-    public int getMemberNo() {
-        return memberNo;
+    public Member(String id, String pwd, String name) {
+        this.memId = id;
+        this.memPwd = pwd;
+        this.memNick = name;
     }
 
-    public void setMemberNo(int memberNo) {
-        this.memberNo = memberNo;
+    public int getMemNo() {
+        return memNo;
     }
 
-    public String getId() {
-        return id;
+    public void setMemNo(int memNo) {
+        this.memNo = memNo;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getMemId() {
+        return memId;
     }
 
-    public String getPwd() {
-        return pwd;
+    public void setMemId(String memId) {
+        this.memId = memId;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public String getMemPwd() {
+        return memPwd;
     }
 
-    public String getNickname() {
-        return nickname;
+    public void setMemPwd(String memPwd) {
+        this.memPwd = memPwd;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public String getMemNick() {
+        return memNick;
     }
 
-    public int getScore() {
-        return score;
+    public void setMemNick(String memNick) {
+        this.memNick = memNick;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public Status getMemStatus() {
+        return memStatus;
+    }
+
+    public void setMemStatus(Status memStatus) {
+        this.memStatus = memStatus;
     }
 
     @Override
     public String toString() {
         return "Member{" +
-                "memberNo=" + memberNo +
-                ", id='" + id + '\'' +
-                ", pwd='" + pwd + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", score=" + score +
+                "memNo=" + memNo +
+                ", memId='" + memId + '\'' +
+                ", memPwd='" + memPwd + '\'' +
+                ", memNick='" + memNick + '\'' +
+                ", memStatus=" + memStatus +
                 '}';
     }
 }

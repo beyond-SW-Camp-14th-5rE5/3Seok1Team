@@ -1,6 +1,7 @@
 package com.seok.hotfist.repository;
 
 import com.seok.hotfist.aggregate.Member;
+import com.seok.hotfist.aggregate.Status;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -57,16 +58,20 @@ public class RankRepository {
     private void createInitialData() {
         rankList.clear();
 
-        rankList.add(new Member(1, "user01", "pass01", "리신", 300));
-        rankList.add(new Member(2, "user02", "pass02", "엘리스", 224));
-        rankList.add(new Member(3, "user03", "pass03", "카타리나", 150));
-        rankList.add(new Member(4, "user04", "pass04", "멜", 280));
-        rankList.add(new Member(5, "user05", "pass05", "오로라", 260));
-        rankList.add(new Member(6, "user06", "pass06", "요네", 198));
-        rankList.add(new Member(7, "user07", "pass07", "뽀삐", 170));
-        rankList.add(new Member(8, "user08", "pass08", "제이스", 185));
-        rankList.add(new Member(9, "user09", "pass09", "징크스", 190));
-        rankList.add(new Member(10, "user10", "pass10", "케인", 177));
+//        rankList.add(new Member(1, "user01", "pass01", "리신", 300));
+//        rankList.add(new Member(2, "user02", "pass02", "엘리스", 224));
+//        rankList.add(new Member(3, "user03", "pass03", "카타리나", 150));
+//        rankList.add(new Member(4, "user04", "pass04", "멜", 280));
+//        rankList.add(new Member(5, "user05", "pass05", "오로라", 260));
+//        rankList.add(new Member(6, "user06", "pass06", "요네", 198));
+//        rankList.add(new Member(7, "user07", "pass07", "뽀삐", 170));
+//        rankList.add(new Member(8, "user08", "pass08", "제이스", 185));
+//        rankList.add(new Member(9, "user09", "pass09", "징크스", 190));
+//        rankList.add(new Member(10, "user10", "pass10", "케인", 177));
+
+        rankList.add(new Member(1, "user01", "pass01", "리신", Status.ACTIVE));
+        rankList.add(new Member(2, "user02", "pass02", "엘리스", Status.ACTIVE));
+        rankList.add(new Member(3, "user03", "pass03", "카타리나", Status.ACTIVE));
 
         Collections.sort(rankList, new RankComparator());
 
@@ -81,7 +86,8 @@ public class RankRepository {
     private static class RankComparator implements Comparator<Member> {
         @Override
         public int compare(Member m1, Member m2) {
-            return Integer.compare(m2.getScore(), m1.getScore());
+//            return Integer.compare(m2.getScore(), m1.getScore());
+            return 0;
         }
     }
 }
