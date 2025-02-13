@@ -95,25 +95,16 @@ public class GameService {
         }
     }
 
-    // 로그인한 회원의 모든 게임 기록 확인
-    public void findMyGameLogs() {
-        ArrayList<GameLog> findMyLogs = gr.selectMyGameLogs();
-
-        for(GameLog gameLog : findMyLogs){
-            System.out.println(gameLog);
-        }
-    }
-
-    // 기록 n개만 확인
+    // 로그인 회원의 기록 count개만 확인
     public void findLastMyGameLogs(int memNo, int count) {
-       List<GameLog> lastGameLogs =  gr.getLastMyGameLogs(count);
+        List<GameLog> lastGameLogs =  gr.getLastMyGameLogs(memNo, count);
 
-       if(!lastGameLogs.isEmpty()) {
-           for(GameLog gameLog : lastGameLogs) {
+        if(!lastGameLogs.isEmpty()) {
+            for(GameLog gameLog : lastGameLogs) {
                 System.out.println(gameLog.getGameNo() + ": " + gameLog.getScore() + "    " + gameLog.getDateTime());
-           }
-       } else {
-           System.out.println(memNo + " 회원님의 게임 기록은 없습니다! 빨리 게임하세요!");
-       }
+            }
+        } else {
+            System.out.println(memNo + " 회원님의 게임 기록은 없습니다! 빨리 게임하세요!");
+        }
     }
 }
