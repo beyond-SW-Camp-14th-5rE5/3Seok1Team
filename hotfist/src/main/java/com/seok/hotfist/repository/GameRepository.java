@@ -14,16 +14,17 @@ public class GameRepository {
     private final File gameLogFile =
             new File("src/main/java/com/seok/hotfist/db/gameLogDB.dat");
 
-    private final ArrayList<GameLog> myGameLogList = new ArrayList<>();
-
     public GameRepository() {
         if(!gameLogFile.exists()) {
             ArrayList<GameLog> defaultGameLogList = new ArrayList<>();
 
             // 더미데이터 추가
             defaultGameLogList.add(new GameLog(1, 1, 10, LocalDateTime.now(), Status.ACTIVE));
-            defaultGameLogList.add(new GameLog(2, 1, 20, LocalDateTime.now(), Status.ACTIVE));
-            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.now(), Status.ACTIVE));
+            defaultGameLogList.add(new GameLog(2, 1, 20, LocalDateTime.of(2025, 2, 5, 14, 33 ,20), Status.ACTIVE));
+            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.of(2025, 3, 5, 14, 33 ,20), Status.ACTIVE));
+            defaultGameLogList.add(new GameLog(2, 1, 30, LocalDateTime.of(2024, 3, 5, 14, 33 ,20), Status.ACTIVE));
+            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.of(2023, 3, 5, 14, 33 ,20), Status.ACTIVE));
+            defaultGameLogList.add(new GameLog(3, 1, 30, LocalDateTime.of(2021, 3, 5, 14, 33 ,20), Status.ACTIVE));
 
             saveGameLog(defaultGameLogList);
         }
@@ -78,12 +79,35 @@ public class GameRepository {
         }
     }
 
-    // 로그인한 회원의 모든 게임 기록
-    public ArrayList<GameLog> selectMyGameLogs() {
-        return myGameLogList;
+    public ArrayList<GameLog> selectAllGameLogs() {
+        return gameLogList;
     }
 
-    // 로그인하면 회원의 게임 기록 저장 (로그인 시 호출)
+    // 로그인한 회원의 전적 List<GameLog>로 반환
+    public List<GameLog> getLastMyGameLogs(int memNo, int count) {
+        List<GameLog> myGameLogList = FindMyGameLogs(memNo);
+        List<GameLog> resultList = new ArrayList<>();
+        Queue<GameLog> gameLogQueue =
+                new PriorityQueue<>(Comparator.comparing(GameLog::getDateTime).reversed());
+
+        if(!myGameLogList.isEmpty()) {
+            // myGameLogList의 개수만큼 || count 이하까지 queue에 저장
+            int i = 0;
+            for(GameLog log : myGameLogList) {
+                if(i++ >= count) break;
+                gameLogQueue.add(log);
+            }
+
+            // 최신순으로 정렬된 데이터 리스트에 저장
+            while(!gameLogQueue.isEmpty()) {
+                resultList.add(gameLogQueue.poll());
+            }
+        }
+
+        return resultList;
+    }
+
+    // 모든 데이터에서 로그인한 회원에 해당하는 List<GameLog> 반환
     public List<GameLog> FindMyGameLogs(int memNo) {
         List<GameLog> returnGameLog = new ArrayList<>();
 
@@ -98,27 +122,4 @@ public class GameRepository {
     public void saveGameScore(int totalScore) {
     }
 
-    public ArrayList<GameLog> selectAllGameLogs() {
-        return gameLogList;
-    }
-
-    public List<GameLog> getLastMyGameLogs(int count) {
-        List<GameLog> resultList = new ArrayList<>();
-        Queue<GameLog> gameLogQueue =
-                new PriorityQueue<>(Comparator.comparing(GameLog::getDateTime).reversed());
-
-        // myGameLogList의 개수만큼 || count 이하까지 queue에 저장
-        int i = 0;
-        for(GameLog log : myGameLogList) {
-            if(i >= count) break;
-            gameLogQueue.add(log);
-        }
-
-        // 정렬된 데이터 리스트에 저장
-        while(!gameLogQueue.isEmpty()) {
-            resultList.add(gameLogQueue.poll());
-        }
-
-        return resultList;
-    }
 }
