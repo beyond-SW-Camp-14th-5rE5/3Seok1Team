@@ -5,6 +5,7 @@ import com.seok.hotfist.aggregate.MasterScore;
 import com.seok.hotfist.repository.GameRepository;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,14 +15,12 @@ public class GameService {
 
     private final GameRepository gr = new GameRepository();
 
-    static int totalScore = 0;
-    static int aitotlaScore = 0;
     static Random random = new Random();
 
     public GameService() {
     }
 
-    private void gameIntro() throws IOException {
+    public void gameIntro() throws IOException {
         System.out.println("""
                 🔥 전설의 격파 대회가 시작됐다! 🔥
                 각 스테이지마다 강력한 고수가 송판을 지키고 있다.
@@ -30,14 +29,16 @@ public class GameService {
                 최강의 격파왕이 되어 역대 최고점을 갱신할 수 있을 것인가?"""
         );
         System.out.println();
-        System.out.print("⭐ 아무키나 입력하세요... ⭐");
+//        System.out.println("⭐ Enter를 눌러주세요... ⭐");
 
-        System.in.read();
+//        System.in.read();
 
         gameStart();
     }
 
     private void gameStart() throws IOException {
+        int totalScore = 0;
+
         for (MasterScore stage : MasterScore.values()) {
             int playerPower = random.nextInt(101);  // 0 ~ 100
             int masterPower = stage.getPOWER();
@@ -49,7 +50,7 @@ public class GameService {
 
             if (playerPower < masterPower) {
                 System.out.println("❌ 힘이 부족합니다! 손이 부러졌습니다...🚑");
-                gameEnd(false);
+                gameEnd(false, totalScore);
                 return;
             } else {
                 int getScore = playerPower - masterPower;
@@ -57,10 +58,10 @@ public class GameService {
                 System.out.println("🌫️ 성공! 송판이 부서졌습니다! (+ " + getScore + "점)");
             }
         }
-        gameEnd(true);
+        gameEnd(true, totalScore);
     }
 
-    private void gameEnd(boolean isCompleted) throws IOException {
+    private void gameEnd(boolean isCompleted, int totalScore) throws IOException {
         if (isCompleted) {
             System.out.println("🎉 모든 송판을 부쉈습니다!");
         } else {
@@ -72,16 +73,16 @@ public class GameService {
         if (totalScore > 0) {
             System.out.println("💬 \"좀 치는데 ㅋ\"");
 
-            // 등록 함수 호출
+            // 등록 함수 호출 (?) -> 어짜피 게임 로그에서 가공해서 사용하는데 필요할까? (이슈 #33)
+
+
         } else {
             System.out.println("💬 \"손이나 낫고 와라 ㅋ\"");
         }
 
         // 점수 로그에 저장
-        gr.saveGameScore(totalScore);
+        SaveGameLog(totalScore);
 
-        System.out.print("⭐ 아무키나 입력하세요... ⭐");
-        System.in.read();
         System.out.println("로비로 돌아갑니다...");
     }
 
@@ -97,10 +98,7 @@ public class GameService {
 
     // 로그인 회원의 기록 count개만 확인
     public void findLastMyGameLogs(int memNo, int count) {
-
-
        List<GameLog> lastGameLogs =  gr.getLastMyGameLogs(memNo, count);
-
 
         if(!lastGameLogs.isEmpty()) {
             for(GameLog gameLog : lastGameLogs) {
@@ -108,6 +106,33 @@ public class GameService {
             }
         } else {
             System.out.println("  " + memNo + " 회원님의 게임 기록은 없습니다! 빨리 게임하세요!");
+        }
+    }
+
+    // 게임이 끝나면 전체 로그에 게임 정보 데이터 저장
+    public void SaveGameLog(int totalScore)
+    {
+        GameLog currentGameResult = new GameLog();
+
+        // 게임 번호 = 로그 번호 (∵ 게임 당 로그 생성)
+        int lastGameNo = gr.selectLastGameNo();
+        currentGameResult.setGameNo(lastGameNo + 1);
+
+        // 로그인한 회원 번호
+        currentGameResult.setMemNo(1);      // 임시로 회원1로 저장
+
+        // 점수
+        currentGameResult.setScore(totalScore);
+
+        // 현재 시간
+        currentGameResult.setDateTime(LocalDateTime.now());
+
+        int result = gr.saveGameScore(currentGameResult);
+
+        if(result == 1) {
+            System.out.println("게임 로그 저장 성공 (개발자용 출력문)");
+        } else {
+            System.out.println("게임 로그 저장 실패 (SaveGameLog 메서드 확인)");
         }
     }
 

@@ -7,7 +7,7 @@ public class GameLog implements Serializable {
     private int memNo;
     private int score;
     private java.time.LocalDateTime dateTime;
-    private Status gameLogStatus;           // 활성화여부
+//    private Status gameLogStatus;           // 활성화여부
 
     public GameLog() {
     }
@@ -17,12 +17,12 @@ public class GameLog implements Serializable {
         this.memNo = memNo;
         this.score = score;
     }
-    public GameLog(int gameNo, int memNo, int score, java.time.LocalDateTime dateTime, Status gameLogStatus) {
+    public GameLog(int gameNo, int memNo, int score, java.time.LocalDateTime dateTime) {
         this.gameNo = gameNo;
         this.memNo = memNo;
         this.score = score;
         this.dateTime = dateTime;
-        this.gameLogStatus = gameLogStatus;
+//        this.gameLogStatus = gameLogStatus;
     }
 
     public int getMemNo() {
@@ -57,13 +57,13 @@ public class GameLog implements Serializable {
         this.dateTime = dateTime;
     }
 
-    public Status getGameLogStatus() {
-        return gameLogStatus;
-    }
+//    public Status getGameLogStatus() {
+//        return gameLogStatus;
+//    }
 
-    public void setGameLogStatus(Status gameLogStatus) {
-        this.gameLogStatus = gameLogStatus;
-    }
+//    public void setGameLogStatus(Status gameLogStatus) {
+//        this.gameLogStatus = gameLogStatus;
+//    }
 
     @Override
     public String toString() {
@@ -72,7 +72,7 @@ public class GameLog implements Serializable {
                 ", memNo=" + memNo +
                 ", score=" + score +
                 ", dateTime=" + dateTime +
-                ", gameLogStatus=" + gameLogStatus +
+//                ", gameLogStatus=" + gameLogStatus +
                 '}';
     }
 }
