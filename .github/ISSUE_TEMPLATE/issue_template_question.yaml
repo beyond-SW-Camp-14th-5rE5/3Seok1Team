@@ -1,0 +1,14 @@
+name: ":question: Question"
+description: "프로젝트 관련 질문"
+title : "[MEMBER/GAME/RANKING] "
+labels: [":question: question"]
+projects: ["beyond-SW-Camp-14th-5rE5/5"]
+body:
+  - type: textarea
+    attributes:
+      label: 📄 설명
+      description: 어떤 질문인지 설명을 작성해 주세요.
+      placeholder: 최대한 자세하게 작성해주세요!
+      value:
+    validations:
+      required: true
