@@ -72,6 +72,7 @@ public class Application3 {
             System.out.println("2. 게임 랭크");
             System.out.println("3. 나의 게임 기록");
             System.out.println("4. 로그아웃");
+            System.out.println("5. 회원 탈퇴");
             System.out.print("메뉴를 선택해주세요: ");
 
             int choice = sc.nextInt();
@@ -79,11 +80,11 @@ public class Application3 {
             switch(choice) {
                 case 1:
                     System.out.println("게임을 시작합니다...");
-                    // 게임 관련 로직 추가
+
                     break;
                 case 2:
                     System.out.println("랭킹을 확인합니다...");
-                    // 랭킹 관련 로직 추가
+
                     break;
                 case 3:
                     Member currentMember = ms.getLoggedInMember();
@@ -108,7 +109,6 @@ public class Application3 {
                         int menuChoice = sc.nextInt();
                         if(menuChoice == 1) {
                             System.out.println("게임을 시작합니다...");
-                            // 게임 시작 로직 추가
                             break;
                         } else if(menuChoice == 2) {
                             break;
@@ -120,6 +120,17 @@ public class Application3 {
                 case 4:
                     System.out.println("로그아웃 합니다.");
                     return;
+                case 5:
+                    System.out.print("정말 탈퇴하시겠습니까? (Y/N): ");
+                    sc.nextLine();
+                    String confirm = sc.nextLine().toUpperCase();
+
+                    if(confirm.equals("Y")) {
+                        ms.removeMember(MemberService.getLoggedInUserNo());
+                        System.out.println("회원 탈퇴가 완료되었습니다.");
+                        return;
+                    }
+                    break;
                 default:
                     System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
             }
