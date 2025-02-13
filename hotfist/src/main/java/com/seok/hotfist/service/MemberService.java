@@ -2,27 +2,24 @@ package com.seok.hotfist.service;
 
 
 import com.seok.hotfist.aggregate.Member;
-import com.seok.hotfist.aggregate.Member3;
 import com.seok.hotfist.aggregate.Status;
 import com.seok.hotfist.repository.MemberRepository;
-
-import java.util.ArrayList;
 
 // 비지니스 로직 처리 공간
 public class MemberService {
 
     private final MemberRepository mr = new MemberRepository();
 
-    public void registMember(Member3 member3) {
+    public void registMember(Member member) {
 
         //회원가입 시 입력받은 값 제외 번호,상태 입력
         int lastMemberNo = mr.selectLastMemberNo();
-        member3.setMemNo(lastMemberNo + 1);
+        member.setMemNo(lastMemberNo + 1);
 
-        member3.setMemStatus(Status.ACTIVE);
+        member.setMemStatus(Status.ACTIVE);
 
         // 모든 DML작업이 일어난 행의 갯수
-        int result = mr.insertMember(member3);
+        int result = mr.insertMember(member);
         System.out.println("insert 성공실패 여부 : " + result);
 
     }

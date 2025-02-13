@@ -1,6 +1,6 @@
 package com.seok.hotfist.run;
 
-import com.seok.hotfist.aggregate.Member3;
+import com.seok.hotfist.aggregate.Member;
 import com.seok.hotfist.service.MemberService;
 
 import java.util.Scanner;
@@ -37,8 +37,8 @@ public class Application3 {
         }
     }
 
-    private static Member3 signUp() {
-        Member3 member3 = null;
+    private static Member signUp() {
+        Member member = null;
 
         Scanner sc = new Scanner(System.in);
         System.out.print("아이디를 입력하세요: ");
@@ -50,8 +50,8 @@ public class Application3 {
         System.out.println("사용하실 이름을 입력하세요: ");
         String name = sc.nextLine();
 
-        member3 = new Member3(id,pwd,name);
+        member = new Member(id,pwd,name);
 
-        return member3;
+        return member;
     }
 }
