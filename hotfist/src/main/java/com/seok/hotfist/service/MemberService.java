@@ -23,6 +23,15 @@ public class MemberService {
         System.out.println("insert 성공실패 여부 : " + result);
 
     }
+
+    public void removeMember(int removeMemNo) {
+        int result = mr.deleteMember(removeMemNo);
+        if (result == 1) {
+            System.out.println(removeMemNo + "번 회원 탈퇴를 성공하였습니다.");
+        } else {
+            System.out.println("회원 탈퇴를 실패했습니다.");
+        }
+    }
     // MemberService 클래스 안에 있는 MemberRepository는 서로 연결되어있다.
     // DB에 연결된 MemberRepository를 데려온 느낌
 

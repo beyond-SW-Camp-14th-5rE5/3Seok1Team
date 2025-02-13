@@ -28,7 +28,7 @@ public class GameRepository {
 
             saveGameLog(defaultGameLogList);
         }
-        
+
         loadGameList();
     }
 
