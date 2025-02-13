@@ -147,7 +147,7 @@ public class Application3 {
         System.out.print("패스워드를 입력하세요: ");
         String pwd = sc.nextLine();
 
-        System.out.println("사용하실 이름을 입력하세요: ");
+        System.out.print("사용하실 이름을 입력하세요: ");
         String name = sc.nextLine();
 
         member = new Member(id,pwd,name);
