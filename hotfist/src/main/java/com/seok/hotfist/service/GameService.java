@@ -97,7 +97,10 @@ public class GameService {
 
     // 로그인 회원의 기록 count개만 확인
     public void findLastMyGameLogs(int memNo, int count) {
-        List<GameLog> lastGameLogs =  gr.getLastMyGameLogs(memNo, count);
+
+
+       List<GameLog> lastGameLogs =  gr.getLastMyGameLogs(memNo, count);
+
 
         if(!lastGameLogs.isEmpty()) {
             for(GameLog gameLog : lastGameLogs) {
