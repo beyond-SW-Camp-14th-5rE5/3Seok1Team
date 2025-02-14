@@ -1,17 +1,47 @@
 package com.seok.hotfist.service;
 
+import com.seok.hotfist.aggregate.GameLog;
 import com.seok.hotfist.aggregate.Member;
 import com.seok.hotfist.repository.RankRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class RankService {
     private final RankRepository rankRepository = new RankRepository();
+    private final GameService gameService = new GameService();
 
     public void registerRank(int memberId, String nickname, int score) {
         Member member = new Member();
         rankRepository.saveRank(member);
         System.out.println("신기록을 달성하여 " + nickname + "님의 점수 " + score + " 점이 랭킹에 등록되었습니다.");
+    }
+
+    public List<GameLog> getTopRanks(int n) {
+        List<GameLog> topRanksList = new ArrayList<>();
+        List<GameLog> gameLogList = gameService.getAllGameLogs();
+
+        // 최상위 점수
+        Queue<GameLog> sortingGameLogQueue =
+                new PriorityQueue<>((gl1, gl2) -> gl2.getScore() - gl1.getScore());
+
+        // n개만
+        if (!gameLogList.isEmpty()) {
+            // 최상위 n개 반환
+            for(int i = 0; i < gameLogList.size(); i++) {
+                if(i >= n) break;
+                sortingGameLogQueue.add(gameLogList.get(i));
+            }
+        }
+
+        // 데이터 리스트로 변환
+        while (!sortingGameLogQueue.isEmpty()) {
+            topRanksList.add(sortingGameLogQueue.poll());
+        }
+
+        return topRanksList;
     }
 
     public void displayRanks() {

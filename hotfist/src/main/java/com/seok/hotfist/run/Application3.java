@@ -4,10 +4,12 @@ import com.seok.hotfist.aggregate.Member;
 import com.seok.hotfist.service.GameService;
 import com.seok.hotfist.service.MemberService;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Application3 {
 
+    private static final GameService gs = new GameService();
     private static final MemberService ms = new MemberService();
 
     public static void main(String[] args) {
@@ -29,7 +31,12 @@ public class Application3 {
                     int loginResult = login();
                     if (loginResult != -1) {
                         System.out.println("로그인 성공!");
-                        showLobby();
+                        try {
+                            showLobby();
+                        } catch (IOException e) {
+                            System.out.println("게임 실행 중 오류가 발생했습니다.");
+                            e.printStackTrace();
+                        }
                     } else {
                         System.out.println("로그인 실패. 아이디 또는 비밀번호를 확인해주세요.");
                     }
@@ -63,7 +70,7 @@ public class Application3 {
         return ms.loginMember(id, pwd);
     }
 
-    private static void showLobby() {
+    private static void showLobby() throws IOException {
         Scanner sc = new Scanner(System.in);
 
         while(true) {
@@ -80,16 +87,13 @@ public class Application3 {
             switch(choice) {
                 case 1:
                     System.out.println("게임을 시작합니다...");
-
+                    gs.gameIntro();  // GameService의 gameIntro() 메서드 호출
                     break;
                 case 2:
                     System.out.println("랭킹을 확인합니다...");
-
                     break;
                 case 3:
                     Member currentMember = ms.getLoggedInMember();
-                    GameService gs = new GameService();
-
                     int highScore = gs.getHighScore(currentMember.getMemNo());
 
                     System.out.println("\n최근 게임 기록" + "               HighScore : " + highScore);
@@ -97,13 +101,12 @@ public class Application3 {
                     System.out.println("| 게임번호 |   점수    |        시간        |");
                     System.out.println("+--------+----------+-------------------+");
 
-                    gs.findLastMyGameLogs(currentMember.getMemNo(), 5);
+                    // gs.findLastMyGameLogs(currentMember.getMemNo(), 5);
 
                     System.out.println("+--------+----------+-------------------+");
 
                     while(true) {
-                        System.out.println("\n1. 게임하기");
-                        System.out.println("2. 이전 메뉴로");
+                        System.out.println("1. 이전 메뉴로");
                         System.out.print("선택: ");
 
                         int menuChoice = sc.nextInt();
