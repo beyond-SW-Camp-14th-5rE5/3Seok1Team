@@ -21,12 +21,26 @@
             if (!file.exists()) {           // 파일이 없다면 아래 로직이 진행됨
                 ArrayList<Member> defaultMemberList = new ArrayList<>();
                 //파일이 존재하지 않을 때 한번 생성
-                defaultMemberList.add(new Member(1,"id01","pwd01","강철권고윤석",Status.ACTIVE ));
+                defaultMemberList.add(new Member(1,"id01","pwd01","강철권고윤석",Status.ACTIVE));
                 defaultMemberList.add(new Member(2,"id02","pwd02","폭풍신곽우석",Status.ACTIVE));
                 defaultMemberList.add(new Member(3,"id03","pwd03","맹수혼최혜민",Status.ACTIVE));
                 defaultMemberList.add(new Member(4,"id04","pwd04","전광축강수지",Status.ACTIVE));
                 defaultMemberList.add(new Member(5,"id05","pwd05","암흑룡김석희",Status.ACTIVE));
                 defaultMemberList.add(new Member(6,"id06","pwd06","섬광참김성민",Status.ACTIVE));
+                defaultMemberList.add(new Member(7,"id07","pwd07","청룡참고윤식",Status.ACTIVE));
+                defaultMemberList.add(new Member(8,"id08","pwd08","천하무적곽유석",Status.ACTIVE));
+                defaultMemberList.add(new Member(9,"id09","pwd09","섬광격최혜원",Status.ACTIVE));
+                defaultMemberList.add(new Member(10,"id10","pwd10","빙결검강슈지",Status.ACTIVE));
+                defaultMemberList.add(new Member(11,"id11","pwd11","천룡파김석휘",Status.ACTIVE));
+                defaultMemberList.add(new Member(12,"id12","pwd12","은하권김셩민",Status.ACTIVE));
+                defaultMemberList.add(new Member(13,"id13","pwd13","흑마검교운석",Status.ACTIVE));
+                defaultMemberList.add(new Member(14,"id14","pwd14","일격필살팍우석",Status.ACTIVE));
+                defaultMemberList.add(new Member(15,"id15","pwd15","맹독왕최해민",Status.ACTIVE));
+                defaultMemberList.add(new Member(16,"id16","pwd16","무적장풍캉수지",Status.ACTIVE));
+                defaultMemberList.add(new Member(17,"id17","pwd17","금강검김셕희",Status.ACTIVE));
+                defaultMemberList.add(new Member(18,"id18","pwd18","암흑의손김성믠",Status.ACTIVE));
+                defaultMemberList.add(new Member(19,"id19","pwd19","번개의신고욘석",Status.ACTIVE));
+                defaultMemberList.add(new Member(20,"id20","pwd20","지옥의왕곽오셕",Status.ACTIVE));
 
                 saveMembers(defaultMemberList);
             }
