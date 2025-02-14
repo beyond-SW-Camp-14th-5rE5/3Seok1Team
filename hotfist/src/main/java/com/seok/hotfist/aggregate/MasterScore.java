@@ -4,9 +4,9 @@ package com.seok.hotfist.aggregate;
 public enum MasterScore {
     STAGE_1("초보 격파왕 '강수지'", 10),
     STAGE_2("중급 격파왕 '고윤석'", 20),
-    STAGE_3("숙련 격파왕 ‘곽우석'", 30),
+    STAGE_3("숙련 격파왕 ‘최혜민'", 30),
     STAGE_4("고수 격파왕 ‘김성민'",40),
-    STAGE_5("전설 격파왕 ‘불주먹 최혜민’", 50);
+    STAGE_5("전설 격파왕 ‘불주먹 곽우석’", 50);
 
     private final String MASTERNAME;
     private final int POWER;
