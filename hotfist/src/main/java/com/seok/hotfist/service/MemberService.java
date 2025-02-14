@@ -29,18 +29,21 @@ public class MemberService {
         }
     }
 
-    public String loginMember(String id, String pwd) {
-        for (Member member : mr.getMemberList()) {
+    public int loginMember(String id, String pwd) {
+        ArrayList<Member> members = mr.getMemberList();
+        for (Member member : members) {
             if (member.getMemId().equals(id) &&
                     member.getMemPwd().equals(pwd) &&
                     member.getMemStatus() == Status.ACTIVE) {
+
                 loggedInUserId = id;
                 loggedInUserNo = member.getMemNo();
-                return id;
+                return loggedInUserNo;
             }
         }
-        return null;
+        return -1;
     }
+
 
     public static String getLoggedInUserId() {
         return loggedInUserId;
