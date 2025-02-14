@@ -86,27 +86,30 @@ public class GameService {
         System.out.println("로비로 돌아갑니다...");
     }
 
-    // 모든 게임 기록 확인
-    public void findAllGameLogs() {
-        ArrayList<GameLog> findLogs = gr.selectAllGameLogs();
+    // 모든 게임 기록 반환
+    public List<GameLog> getAllGameLogs() {
+        List<GameLog> findLogs = gr.selectAllGameLogs();
 
-        System.out.println("테스트용 모든 게임 기록 확인");
-        for (GameLog gameLog : findLogs) {
-            System.out.println(gameLog);
-        }
+//        System.out.println("테스트용 모든 게임 기록 확인");
+//        for (GameLog gameLog : findLogs) {
+//            System.out.println(gameLog);
+//        }
+        return findLogs;
     }
 
-    // 로그인 회원의 기록 count개만 확인
-    public void findLastMyGameLogs(int memNo, int count) {
+    // 로그인 회원의 기록 count개만큼 반환
+    public List<GameLog> getLastMyGameLogs(int memNo, int count) {
        List<GameLog> lastGameLogs =  gr.getLastMyGameLogs(memNo, count);
 
-        if(!lastGameLogs.isEmpty()) {
-            for(GameLog gameLog : lastGameLogs) {
-                System.out.println(gameLog.getGameNo() + ": " + gameLog.getScore() + "    " + gameLog.getDateTime());
-            }
-        } else {
-            System.out.println("  " + memNo + " 회원님의 게임 기록은 없습니다! 빨리 게임하세요!");
-        }
+//        if(!lastGameLogs.isEmpty()) {
+//            for(GameLog gameLog : lastGameLogs) {
+//                System.out.println(gameLog.getGameNo() + ": " + gameLog.getScore() + "    " + gameLog.getDateTime());
+//            }
+//        } else {
+//            System.out.println("  " + memNo + " 회원님의 게임 기록은 없습니다! 빨리 게임하세요!");
+//        }
+
+        return lastGameLogs;
     }
 
     // 게임이 끝나면 전체 로그에 게임 정보 데이터 저장
