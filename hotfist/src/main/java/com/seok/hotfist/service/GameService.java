@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 /* 게임 로직 처리 */
 public class GameService {
@@ -23,10 +24,10 @@ public class GameService {
     public void gameIntro() throws IOException {
         System.out.println("""
                 🔥 전설의 격파 대회가 시작됐다! 🔥
-                각 스테이지마다 강력한 고수가 송판을 지키고 있다.
+                각 스테이지마다 강력한 고수와 송판 부수기 대결을 겨뤄야한다.
                 그들의 격파 점수를 뛰어넘어야만 다음 스테이지로 갈 수 있다.
-                하지만 힘이 부족하면 당신의 손이 부러질 것이다.
-                최강의 격파왕이 되어 역대 최고점을 갱신할 수 있을 것인가?"""
+                하지만 송판을 부수지 못한다면 당신의 손이 부러질 것이다.
+                최강의 격파왕이 되어 역대 최고점을 갱신할 수 있을 것인가!?"""
         );
         System.out.println();
 //        System.out.println("⭐ Enter를 눌러주세요... ⭐");
@@ -37,6 +38,9 @@ public class GameService {
     }
 
     private void gameStart() throws IOException {
+
+        Scanner scanner = new Scanner(System.in);
+
         int totalScore = 0;
 
         for (MasterScore stage : MasterScore.values()) {
@@ -45,8 +49,20 @@ public class GameService {
 
             System.out.println("\n===== 스테이지 " + (stage.ordinal() + 1) + " =====");
             System.out.println("💪 도전 상대: " + stage.getMASTERNAME());
+            System.out.print("\uD83D\uDCA8 도망치고 싶으면 \"Y\" 도전하겠다면 \"N\" 하세요 : ");
+            String escape = scanner.nextLine().toUpperCase();
+            if (escape.equals("Y")){
+                System.out.println();
+                System.out.println("   겁쟁이ㅋ");
+                return;
+            }
+
+            System.out.print("\uD83D\uDC4A 좋은데요?ㅋ 이제 기합을 외쳐주세요 : ");
+            String kiai1 = scanner.nextLine();
+
             System.out.println("🔨 송판 격파 시도 중... (힘: " + playerPower + ")");
             System.out.println("📌 고수의 점수: " + masterPower);
+            System.out.println();
 
             if (playerPower < masterPower) {
                 System.out.println("❌ 힘이 부족합니다! 손이 부러졌습니다...🚑");
