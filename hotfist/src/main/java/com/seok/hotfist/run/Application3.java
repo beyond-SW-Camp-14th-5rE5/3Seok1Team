@@ -1,16 +1,22 @@
 package com.seok.hotfist.run;
 
+import com.seok.hotfist.aggregate.GameLog;
 import com.seok.hotfist.aggregate.Member;
 import com.seok.hotfist.service.GameService;
 import com.seok.hotfist.service.MemberService;
+import com.seok.hotfist.service.RankService;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 public class Application3 {
 
     private static final GameService gs = new GameService();
     private static final MemberService ms = new MemberService();
+    private static final RankService rs = new RankService();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -41,7 +47,7 @@ public class Application3 {
                         System.out.println("로그인 실패. 아이디 또는 비밀번호를 확인해주세요.");
                     }
                     break;
-                case 3:                                     // 회원 조회
+                case 3:
                     ms.findAllMembers();
                     break;
                 case 9:
@@ -87,38 +93,57 @@ public class Application3 {
             switch(choice) {
                 case 1:
                     System.out.println("게임을 시작합니다...");
-                    gs.gameIntro();  // GameService의 gameIntro() 메서드 호출
+                    gs.gameIntro();
                     break;
                 case 2:
                     System.out.println("랭킹을 확인합니다...");
+                    List<GameLog> topRanks = rs.getTopRanks(10);
+                    LocalDateTime now = LocalDateTime.now();
+                    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
+
+                    System.out.printf("%n 🔥오늘의 불주먹🔥   " + now.format(dateFormatter) + "%n");
+                    System.out.println("+--------+----------+-----------+");
+                    System.out.println("| 순위    |   점수    |   닉네임    |");
+                    System.out.println("+--------+----------+-----------+");
+
+                    if (!topRanks.isEmpty()) {
+                        int rank = 1;
+                        for (GameLog log : topRanks) {
+                            System.out.printf("| %-6d | %-8d | %-3s |%n",
+                                    rank++,
+                                    log.getScore(),
+                                    MemberService.getLoggedInUserNick());
+                        }
+                    } else {
+                        System.out.println("|        점수 기록이 없습니다        |");
+                    }
+                    System.out.println("+--------+----------+-----------+");
                     break;
                 case 3:
                     Member currentMember = ms.getLoggedInMember();
                     int highScore = gs.getHighScore(currentMember.getMemNo());
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
 
                     System.out.println("\n최근 게임 기록" + "               HighScore : " + highScore);
                     System.out.println("+--------+----------+-------------------+");
                     System.out.println("| 게임번호 |   점수    |        시간        |");
                     System.out.println("+--------+----------+-------------------+");
 
-                    // gs.findLastMyGameLogs(currentMember.getMemNo(), 5);
+                    List<GameLog> logs = gs.getLastMyGameLogs(currentMember.getMemNo(), 5);
+                    if (logs != null && !logs.isEmpty()) {
+                        for (GameLog log : logs) {
+                            String formattedDate = log.getDateTime().format(formatter);
+                            System.out.printf("| %-6d | %-8d | %-17s |%n",
+                                    log.getGameNo(),
+                                    log.getScore(),
+                                    formattedDate);
+                        }
+                    } else {
+                        System.out.println("|         게임 기록이 없습니다          |");
+                    }
 
                     System.out.println("+--------+----------+-------------------+");
-
-                    while(true) {
-                        System.out.println("1. 이전 메뉴로");
-                        System.out.print("선택: ");
-
-                        int menuChoice = sc.nextInt();
-                        if(menuChoice == 1) {
-                            System.out.println("게임을 시작합니다...");
-                            break;
-                        } else if(menuChoice == 2) {
-                            break;
-                        } else {
-                            System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
-                        }
-                    }
                     break;
                 case 4:
                     System.out.println("로그아웃 합니다.");
@@ -157,4 +182,6 @@ public class Application3 {
 
         return member;
     }
+
+
 }
