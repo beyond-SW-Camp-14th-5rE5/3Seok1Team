@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Application3 {
-
     private static final GameService gs = new GameService();
     private static final MemberService ms = new MemberService();
     private static final RankService rs = new RankService();
+    private static int memNo;  // 전역 변수로 추가
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -73,7 +73,11 @@ public class Application3 {
             return -1;
         }
 
-        return ms.loginMember(id, pwd);
+        int loginResult = ms.loginMember(id, pwd);
+        if (loginResult != -1) {
+            memNo = loginResult;
+        }
+        return loginResult;
     }
 
     private static void showLobby() throws IOException {
@@ -163,6 +167,14 @@ public class Application3 {
                     System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
             }
         }
+    }
+
+    public static int getMemNo() {
+        return memNo;
+    }
+
+    public static void setMemNo(int no) {
+        memNo = no;
     }
 
     private static Member signUp() {
