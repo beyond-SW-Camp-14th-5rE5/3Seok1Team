@@ -106,8 +106,7 @@ public class Application3 {
                     System.out.println("+--------+----------+-------------------+");
 
                     while(true) {
-                        System.out.println("\n1. 게임하기");
-                        System.out.println("2. 이전 메뉴로");
+                        System.out.println("1. 이전 메뉴로");
                         System.out.print("선택: ");
 
                         int menuChoice = sc.nextInt();
