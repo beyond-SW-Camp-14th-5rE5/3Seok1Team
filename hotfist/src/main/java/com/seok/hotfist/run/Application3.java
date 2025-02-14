@@ -97,7 +97,7 @@ public class Application3 {
                     System.out.println("| 게임번호 |   점수    |        시간        |");
                     System.out.println("+--------+----------+-------------------+");
 
-                    gs.findLastMyGameLogs(currentMember.getMemNo(), 5);
+                    // gs.findLastMyGameLogs(currentMember.getMemNo(), 5);
 
                     System.out.println("+--------+----------+-------------------+");
 

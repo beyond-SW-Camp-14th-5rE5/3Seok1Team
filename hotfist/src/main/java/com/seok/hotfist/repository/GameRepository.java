@@ -94,6 +94,8 @@ public class GameRepository {
     public List<GameLog> getLastMyGameLogs(int memNo, int count) {
         List<GameLog> myGameLogList = FindMyGameLogs(memNo);
         List<GameLog> resultList = new ArrayList<>();
+
+        // 최신순으로 정렬
         Queue<GameLog> gameLogQueue =
                 new PriorityQueue<>(Comparator.comparing(GameLog::getDateTime).reversed());
 
@@ -105,7 +107,7 @@ public class GameRepository {
                 gameLogQueue.add(log);
             }
 
-            // 최신순으로 정렬된 데이터 리스트에 저장
+            // 가공 완료된 데이터 리스트에 저장
             while(!gameLogQueue.isEmpty()) {
                 resultList.add(gameLogQueue.poll());
             }
@@ -126,6 +128,7 @@ public class GameRepository {
         return returnGameLog;
     }
 
+    // 게임 끝나면 로그 저장
     public int saveGameScore(GameLog gameLog) {
         int result = 0;
         MyObjectOutput moo = null;
