@@ -23,11 +23,11 @@ public class Application3 {
 
             switch (input) {
                 case 1:
-                    ms.registMember(signUp());              //회원가입
+                    ms.registMember(signUp());
                     break;
-                case 2:                                     //회원 로그인
-                    String loginResult = login();
-                    if (loginResult != null) {
+                case 2:
+                    int loginResult = login();
+                    if (loginResult != -1) {
                         System.out.println("로그인 성공!");
                         showLobby();
                     } else {
@@ -46,7 +46,7 @@ public class Application3 {
         }
     }
 
-    private static String login() {
+    private static int login() {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("아이디를 입력하세요: ");
@@ -57,7 +57,7 @@ public class Application3 {
 
         if (id.isEmpty() || pwd.isEmpty()) {
             System.out.println("아이디와 비밀번호는 필수 입력값입니다.");
-            return null;
+            return -1;
         }
 
         return ms.loginMember(id, pwd);
