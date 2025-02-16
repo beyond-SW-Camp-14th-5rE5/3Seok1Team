@@ -27,18 +27,16 @@ public class RankService {
         Queue<GameLog> sortingGameLogQueue =
                 new PriorityQueue<>((gl1, gl2) -> gl2.getScore() - gl1.getScore());
 
-        // n개만
         if (!gameLogList.isEmpty()) {
             // 최상위 n개 반환
-            for(int i = 0; i < gameLogList.size(); i++) {
-                if(i >= n) break;
-                sortingGameLogQueue.add(gameLogList.get(i));
-            }
-        }
+            sortingGameLogQueue.addAll(gameLogList);
 
-        // 데이터 리스트로 변환
-        while (!sortingGameLogQueue.isEmpty()) {
-            topRanksList.add(sortingGameLogQueue.poll());
+            // 최상위 n개만 데이터 리스트로 변환
+            int i = 0;
+            while (!sortingGameLogQueue.isEmpty()) {
+                if (i++ >= n) break;
+                topRanksList.add(sortingGameLogQueue.poll());
+            }
         }
 
         return topRanksList;

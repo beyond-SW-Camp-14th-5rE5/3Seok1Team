@@ -3,6 +3,7 @@ package com.seok.hotfist.service;
 import com.seok.hotfist.aggregate.GameLog;
 import com.seok.hotfist.aggregate.MasterScore;
 import com.seok.hotfist.repository.GameRepository;
+import com.seok.hotfist.run.Application3;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -138,7 +139,9 @@ public class GameService {
         currentGameResult.setGameNo(lastGameNo + 1);
 
         // 로그인한 회원 번호
-        currentGameResult.setMemNo(1);      // 임시로 회원1로 저장
+        int memNo = Application3.getMemNo();
+        System.out.println("memNo:" + memNo);
+        currentGameResult.setMemNo(memNo);      // 임시로 회원1로 저장
 
         // 점수
         currentGameResult.setScore(totalScore);
