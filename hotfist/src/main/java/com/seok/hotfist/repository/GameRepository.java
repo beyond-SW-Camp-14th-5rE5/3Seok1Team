@@ -57,26 +57,16 @@ public class GameRepository {
 
     // 게임 데이터 저장
     private void saveGameLog(ArrayList<GameLog> inputGmaeLogList) {
-        ObjectOutputStream oos = null;
-        try {
-            oos = new ObjectOutputStream(
-                    new BufferedOutputStream(
-                            new FileOutputStream(gameLogFile)
-                    )
-            );
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new BufferedOutputStream(
+                        new FileOutputStream(gameLogFile)
+                )
+        )) {
             for(GameLog gameLog : inputGmaeLogList) {
                 oos.writeObject(gameLog);
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                if(oos != null) oos.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -98,17 +88,14 @@ public class GameRepository {
         // 최신순으로 정렬
         Queue<GameLog> gameLogQueue =
                 new PriorityQueue<>(Comparator.comparing(GameLog::getDateTime).reversed());
-
         if(!myGameLogList.isEmpty()) {
-            // myGameLogList의 개수만큼 || count 이하까지 queue에 저장
-            int i = 0;
-            for(GameLog log : myGameLogList) {
-                if(i++ >= count) break;
-                gameLogQueue.add(log);
-            }
+            // pq에 모든 데이터 저장
+            gameLogQueue.addAll(myGameLogList);
 
-            // 가공 완료된 데이터 리스트에 저장
+            int i = 0;
+            // 가공 완료된 데이터 리스트에 저장 (count 이하만큼만 저장)
             while(!gameLogQueue.isEmpty()) {
+                if(i++ >= count) break;
                 resultList.add(gameLogQueue.poll());
             }
         }

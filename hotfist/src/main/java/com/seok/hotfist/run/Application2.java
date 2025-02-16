@@ -14,15 +14,16 @@ public class Application2 {
 
     public static void main(String[] args) throws IOException {
         System.out.println("1번 회원 게임 기록 확인");
-//        gs.findLastMyGameLogs(1, 60);
 
-//        gs.gameIntro();
+        gs.gameIntro();
+//        gs.findLastMyGameLogs(1, 60);
 
 //        gs.getTopScore(2);
 
 
         // 테스트용 랭킹 출력
-        List<GameLog> topRanks = rs.getTopRanks(10);
+//        List<GameLog> topRanks = rs.getTopRanks(10);
+        List<GameLog> topRanks = gs.getLastMyGameLogs(1, 60);
         for(GameLog topRank : topRanks) {
             System.out.println(topRank);
         }
