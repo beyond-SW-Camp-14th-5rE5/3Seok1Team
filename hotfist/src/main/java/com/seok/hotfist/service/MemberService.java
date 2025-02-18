@@ -79,4 +79,13 @@ public class MemberService {
             System.out.println(member);
         }
     }
+    public String getMemberNickname(int memNo) {
+        ArrayList<Member> members = mr.getMemberList();
+        for (Member member : members) {
+            if (member.getMemNo() == memNo) {
+                return member.getMemNick();
+            }
+        }
+        return null;
+    }
 }
