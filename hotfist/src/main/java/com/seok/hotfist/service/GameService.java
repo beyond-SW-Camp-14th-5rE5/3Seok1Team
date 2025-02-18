@@ -86,19 +86,13 @@ public class GameService {
         }
         System.out.println(" 최종 점수: " + totalScore);
 
-        // 점수가 0보다 큰 경우에만 처리
+        // 랭킹에 등록
         if (totalScore > 0) {
             System.out.println("💬 \"좀 치는데 ㅋ\"");
 
-            // RankService 인스턴스 생성
-            RankService rankService = new RankService();
+            // 등록 함수 호출 (?) -> 어짜피 게임 로그에서 가공해서 사용하는데 필요할까? (이슈 #33)
 
-            // 현재 로그인한 사용자 정보 가져오기
-            int memNo = Application3.getMemNo();
-            String nickname = MemberService.getLoggedInUserNick();
 
-            // 랭킹에 등록
-            rankService.registerRank(memNo, nickname, totalScore);
         } else {
             System.out.println("💬 \"손이나 낫고 와라 ㅋ\"");
         }
@@ -122,7 +116,7 @@ public class GameService {
 
     // 로그인 회원의 기록 count개만큼 반환
     public List<GameLog> getLastMyGameLogs(int memNo, int count) {
-       List<GameLog> lastGameLogs =  gr.getLastMyGameLogs(memNo, count);
+        List<GameLog> lastGameLogs =  gr.getLastMyGameLogs(memNo, count);
 
 //        if(!lastGameLogs.isEmpty()) {
 //            for(GameLog gameLog : lastGameLogs) {

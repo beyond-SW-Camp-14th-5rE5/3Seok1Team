@@ -70,6 +70,23 @@ public class MemberService {
         }
         return null;
     }
+    public String getMemberNicknameById(int memNo) {
+        for (Member member : mr.getMemberList()) {
+            if (member.getMemNo() == memNo) {
+                return member.getMemNick();
+            }
+        }
+        return "해당 회원이 없습니다.";
+    }
+
+    public boolean isIdExists(String id) {
+        for (Member member : mr.getMemberList()) {
+            if (member.getMemId().equals(id)) {
+                return true; // 아이디가 이미 존재하면 true 반환
+            }
+        }
+        return false; // 존재하지 않으면 false
+    }
 
     public void findAllMembers() {
         ArrayList<Member> findMembers = mr.selectAllMembers();
@@ -78,14 +95,5 @@ public class MemberService {
         for (Member member : findMembers) {
             System.out.println(member);
         }
-    }
-    public String getMemberNickname(int memNo) {
-        ArrayList<Member> members = mr.getMemberList();
-        for (Member member : members) {
-            if (member.getMemNo() == memNo) {
-                return member.getMemNick();
-            }
-        }
-        return null;
     }
 }
