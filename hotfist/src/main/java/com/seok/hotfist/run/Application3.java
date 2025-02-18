@@ -31,7 +31,10 @@ public class Application3 {
 
             switch (input) {
                 case 1:
-                    ms.registMember(signUp());
+                    Member newMember = signUp();
+                    if (newMember != null) {
+                        ms.registMember(newMember);
+                    }
                     break;
                 case 2:
                     int loginResult = login();
@@ -113,16 +116,16 @@ public class Application3 {
                     if (!topRanks.isEmpty()) {
                         int rank = 1;
                         for (GameLog log : topRanks) {
-                            String nickname = ms.getMemberNickname(log.getMemNo()); // 각 게임 로그의 memNo에 해당하는 닉네임을 가져옴
+                            String nickname = ms.getMemberNicknameById(log.getMemNo()); // 실제 유저 닉네임 가져오기
                             System.out.printf("| %-6d | %-8d | %-3s |%n",
                                     rank++,
                                     log.getScore(),
-                                    nickname != null ? nickname : "Unknown");
+                                    nickname);
                         }
                     } else {
                         System.out.println("|        점수 기록이 없습니다        |");
                     }
-                    System.out.println("+--------+----------+-----------------+");
+                    System.out.println("+--------+----------+-----------+");
                     break;
                 case 3:
                     Member currentMember = ms.getLoggedInMember();
@@ -145,7 +148,7 @@ public class Application3 {
                                     formattedDate);
                         }
                     } else {
-                        System.out.println("|         게임 기록이 없습니다          |");
+                        System.out.println("|            게임 기록이 없습니다            |");
                     }
 
                     System.out.println("+--------+----------+-------------------+");
@@ -179,20 +182,42 @@ public class Application3 {
     }
 
     private static Member signUp() {
-        Member member = null;
-
         Scanner sc = new Scanner(System.in);
-        System.out.print("아이디를 입력하세요: ");
-        String id = sc.nextLine();
+        Member member = null;
+        String id, pwd, name;
 
-        System.out.print("패스워드를 입력하세요: ");
-        String pwd = sc.nextLine();
+        while (true) {
+            System.out.print("아이디를 입력하세요 (취소하려면 'cancel' 입력): ");
+            id = sc.nextLine().trim();
 
-        System.out.print("사용하실 이름을 입력하세요: ");
-        String name = sc.nextLine();
+            if (id.equalsIgnoreCase("cancel")) {
+                System.out.println("회원가입이 취소되었습니다.");
+                return null; // 회원가입 취소
+            }
 
-        member = new Member(id,pwd,name);
+            // ID 중복 확인
+            if (ms.isIdExists(id)) {
+                System.out.println("이미 해당 아이디가 있습니다. 다른 아이디를 입력하세요.");
+                continue;
+            }
+            break;
+        }
 
+        System.out.print("패스워드를 입력하세요 (취소하려면 'cancel' 입력): ");
+        pwd = sc.nextLine().trim();
+        if (pwd.equalsIgnoreCase("cancel")) {
+            System.out.println("회원가입이 취소되었습니다.");
+            return null;
+        }
+
+        System.out.print("사용하실 이름을 입력하세요 (취소하려면 'cancel' 입력): ");
+        name = sc.nextLine().trim();
+        if (name.equalsIgnoreCase("cancel")) {
+            System.out.println("회원가입이 취소되었습니다.");
+            return null;
+        }
+
+        member = new Member(id, pwd, name);
         return member;
     }
 
