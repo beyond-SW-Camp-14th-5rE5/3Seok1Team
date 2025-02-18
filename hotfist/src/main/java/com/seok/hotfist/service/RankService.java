@@ -4,6 +4,7 @@ import com.seok.hotfist.aggregate.GameLog;
 import com.seok.hotfist.aggregate.Member;
 import com.seok.hotfist.repository.RankRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -14,9 +15,13 @@ public class RankService {
     private final GameService gameService = new GameService();
 
     public void registerRank(int memberId, String nickname, int score) {
-        Member member = new Member();
-        rankRepository.saveRank(member);
-        System.out.println("신기록을 달성하여 " + nickname + "님의 점수 " + score + " 점이 랭킹에 등록되었습니다.");
+        GameLog gameLog = new GameLog();
+        gameLog.setMemNo(memberId);
+        gameLog.setScore(score);
+        gameLog.setDateTime(LocalDateTime.now());
+
+        rankRepository.saveRank(gameLog);
+        System.out.println(nickname + "님의 점수 " + score + "점이 랭킹에 등록되었습니다.");
     }
 
     public List<GameLog> getTopRanks(int n) {

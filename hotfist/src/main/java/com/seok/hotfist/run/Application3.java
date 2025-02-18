@@ -113,15 +113,16 @@ public class Application3 {
                     if (!topRanks.isEmpty()) {
                         int rank = 1;
                         for (GameLog log : topRanks) {
+                            String nickname = ms.getMemberNickname(log.getMemNo()); // 각 게임 로그의 memNo에 해당하는 닉네임을 가져옴
                             System.out.printf("| %-6d | %-8d | %-3s |%n",
                                     rank++,
                                     log.getScore(),
-                                    MemberService.getLoggedInUserNick());
+                                    nickname != null ? nickname : "Unknown");
                         }
                     } else {
                         System.out.println("|        점수 기록이 없습니다        |");
                     }
-                    System.out.println("+--------+----------+-----------+");
+                    System.out.println("+--------+----------+-----------------+");
                     break;
                 case 3:
                     Member currentMember = ms.getLoggedInMember();

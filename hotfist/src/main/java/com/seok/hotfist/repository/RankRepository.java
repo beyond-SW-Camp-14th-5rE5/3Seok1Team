@@ -1,24 +1,19 @@
 package com.seok.hotfist.repository;
 
-import com.seok.hotfist.aggregate.Member;
-import com.seok.hotfist.aggregate.Status;
-
+import com.seok.hotfist.aggregate.GameLog;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class RankRepository {
-    private final List<Member> rankList = new ArrayList<>();
+    private final List<GameLog> rankList = new ArrayList<>();
     private final File file = new File("src/main/java/com/seok/hotfist/db/rankDB.dat");
 
     public RankRepository() {
         loadRanks();
     }
 
-    public void saveRank(Member member) {
-        rankList.add(member);
+    public void saveRank(GameLog gameLog) {
+        rankList.add(gameLog);
         Collections.sort(rankList, new RankComparator());
 
         if (rankList.size() > 10) {
@@ -33,7 +28,7 @@ public class RankRepository {
         }
     }
 
-    public List<Member> getRanks() {
+    public List<GameLog> getRanks() {
         return rankList;
     }
 
@@ -46,7 +41,7 @@ public class RankRepository {
 
         try (ObjectInputStream ois = new ObjectInputStream(
                 new BufferedInputStream(new FileInputStream(file)))) {
-            List<Member> loadedList = (List<Member>) ois.readObject();
+            List<GameLog> loadedList = (List<GameLog>) ois.readObject();
             rankList.clear();
             rankList.addAll(loadedList);
         } catch (IOException | ClassNotFoundException e) {
@@ -57,24 +52,7 @@ public class RankRepository {
 
     private void createInitialData() {
         rankList.clear();
-
-//        rankList.add(new Member(1, "user01", "pass01", "리신", 300));
-//        rankList.add(new Member(2, "user02", "pass02", "엘리스", 224));
-//        rankList.add(new Member(3, "user03", "pass03", "카타리나", 150));
-//        rankList.add(new Member(4, "user04", "pass04", "멜", 280));
-//        rankList.add(new Member(5, "user05", "pass05", "오로라", 260));
-//        rankList.add(new Member(6, "user06", "pass06", "요네", 198));
-//        rankList.add(new Member(7, "user07", "pass07", "뽀삐", 170));
-//        rankList.add(new Member(8, "user08", "pass08", "제이스", 185));
-//        rankList.add(new Member(9, "user09", "pass09", "징크스", 190));
-//        rankList.add(new Member(10, "user10", "pass10", "케인", 177));
-
-        rankList.add(new Member(1, "user01", "pass01", "리신", Status.ACTIVE));
-        rankList.add(new Member(2, "user02", "pass02", "엘리스", Status.ACTIVE));
-        rankList.add(new Member(3, "user03", "pass03", "카타리나", Status.ACTIVE));
-
-        Collections.sort(rankList, new RankComparator());
-
+        // 초기 랭킹 데이터는 비워둡니다
         try (ObjectOutputStream oos = new ObjectOutputStream(
                 new BufferedOutputStream(new FileOutputStream(file)))) {
             oos.writeObject(rankList);
@@ -83,11 +61,10 @@ public class RankRepository {
         }
     }
 
-    private static class RankComparator implements Comparator<Member> {
+    private static class RankComparator implements Comparator<GameLog> {
         @Override
-        public int compare(Member m1, Member m2) {
-//            return Integer.compare(m2.getScore(), m1.getScore());
-            return 0;
+        public int compare(GameLog g1, GameLog g2) {
+            return Integer.compare(g2.getScore(), g1.getScore()); // 점수 내림차순 정렬
         }
     }
 }
